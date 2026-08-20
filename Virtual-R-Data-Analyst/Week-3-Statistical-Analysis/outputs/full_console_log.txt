@@ -1,0 +1,203 @@
+
+==================== DATASET STRUCTURE ====================
+'data.frame':	244 obs. of  7 variables:
+ $ total_bill: num  17 10.3 21 23.7 24.6 ...
+ $ tip       : num  1.01 1.66 3.5 3.31 3.61 4.71 2 3.12 1.96 3.23 ...
+ $ sex       : Factor w/ 2 levels "Female","Male": 1 2 2 2 1 2 2 2 2 2 ...
+ $ smoker    : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
+ $ day       : Factor w/ 4 levels "Fri","Sat","Sun",..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ time      : Factor w/ 2 levels "Dinner","Lunch": 1 1 1 1 1 1 1 1 1 1 ...
+ $ size      : int  2 3 3 2 4 4 2 4 2 2 ...
+
+==================== FIRST 6 ROWS ====================
+  total_bill  tip    sex smoker day   time size
+1      16.99 1.01 Female     No Sun Dinner    2
+2      10.34 1.66   Male     No Sun Dinner    3
+3      21.01 3.50   Male     No Sun Dinner    3
+4      23.68 3.31   Male     No Sun Dinner    2
+5      24.59 3.61 Female     No Sun Dinner    4
+6      25.29 4.71   Male     No Sun Dinner    4
+
+==================== MISSING VALUES PER COLUMN ====================
+total_bill        tip        sex     smoker        day       time       size 
+         0          0          0          0          0          0          0 
+
+==================== SUMMARY STATISTICS ====================
+   total_bill         tip             sex      smoker      day         time          size     
+ Min.   : 3.07   Min.   : 1.000   Female: 87   No :151   Fri :19   Dinner:176   Min.   :1.00  
+ 1st Qu.:13.35   1st Qu.: 2.000   Male  :157   Yes: 93   Sat :87   Lunch : 68   1st Qu.:2.00  
+ Median :17.80   Median : 2.900                          Sun :76                Median :2.00  
+ Mean   :19.79   Mean   : 2.998                          Thur:62                Mean   :2.57  
+ 3rd Qu.:24.13   3rd Qu.: 3.562                                                 3rd Qu.:3.00  
+ Max.   :50.81   Max.   :10.000                                                 Max.   :6.00  
+
+==================== SHAPIRO-WILK NORMALITY: tip ====================
+
+	Shapiro-Wilk normality test
+
+data:  tips$tip
+W = 0.89781, p-value = 8.2e-12
+
+
+==================== SHAPIRO-WILK NORMALITY: total_bill ====================
+
+	Shapiro-Wilk normality test
+
+data:  tips$total_bill
+W = 0.91972, p-value = 3.325e-10
+
+
+==================== PEARSON CORRELATION: total_bill vs tip ====================
+
+	Pearson's product-moment correlation
+
+data:  tips$total_bill and tips$tip
+t = 14.26, df = 242, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6011647 0.7386372
+sample estimates:
+      cor 
+0.6757341 
+
+
+==================== CORRELATION MATRIX (numeric vars) ====================
+           total_bill   tip  size
+total_bill      1.000 0.676 0.598
+tip             0.676 1.000 0.489
+size            0.598 0.489 1.000
+
+==================== T-TEST: tip by time (Lunch vs Dinner) ====================
+
+	Welch Two Sample t-test
+
+data:  tip by time
+t = 2.0593, df = 144.07, p-value = 0.04126
+alternative hypothesis: true difference in means between group Dinner and group Lunch is not equal to 0
+95 percent confidence interval:
+ 0.01505364 0.73411080
+sample estimates:
+mean in group Dinner  mean in group Lunch 
+            3.102670             2.728088 
+
+
+==================== T-TEST: tip percentage by smoker status ====================
+
+	Welch Two Sample t-test
+
+data:  tip_pct by smoker
+t = -0.41123, df = 117.28, p-value = 0.6817
+alternative hypothesis: true difference in means between group No and group Yes is not equal to 0
+95 percent confidence interval:
+ -2.249327  1.475811
+sample estimates:
+ mean in group No mean in group Yes 
+         15.93285          16.31960 
+
+
+==================== CHI-SQUARE TEST: smoker vs day ====================
+     
+      Fri Sat Sun Thur
+  No    4  45  57   45
+  Yes  15  42  19   17
+
+	Pearson's Chi-squared test
+
+data:  chi_tbl
+X-squared = 25.787, df = 3, p-value = 1.057e-05
+
+
+==================== ANOVA: tip across day ====================
+             Df Sum Sq Mean Sq F value Pr(>F)
+day           3    9.5   3.175   1.672  0.174
+Residuals   240  455.7   1.899               
+null device 
+          1 
+null device 
+          1 
+null device 
+          1 
+
+==================== TRAIN / TEST SPLIT ====================
+Training rows: 195  | Testing rows: 49 
+
+==================== FULL MODEL SUMMARY ====================
+
+Call:
+lm(formula = tip ~ total_bill + size + sex + smoker + day + time, 
+    data = train)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.5811 -0.6223 -0.0720  0.5071  3.2068 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.96518    0.35524   2.717  0.00721 ** 
+total_bill   0.08833    0.01047   8.437 8.94e-15 ***
+size         0.22680    0.09273   2.446  0.01538 *  
+sexMale     -0.06938    0.15199  -0.456  0.64859    
+smokerYes   -0.25900    0.15924  -1.626  0.10555    
+daySat      -0.23909    0.30458  -0.785  0.43347    
+daySun      -0.29737    0.32133  -0.925  0.35594    
+dayThur     -0.30134    0.43484  -0.693  0.48918    
+timeLunch    0.07200    0.46928   0.153  0.87822    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9895 on 186 degrees of freedom
+Multiple R-squared:  0.4762,	Adjusted R-squared:  0.4536 
+F-statistic: 21.13 on 8 and 186 DF,  p-value: < 2.2e-16
+
+
+==================== STEPWISE-SELECTED MODEL SUMMARY ====================
+
+Call:
+lm(formula = tip ~ total_bill + size + smoker, data = train)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.6319 -0.5784 -0.0769  0.5390  3.2034 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.72437    0.21881   3.310  0.00111 ** 
+total_bill   0.08699    0.01016   8.558 3.73e-15 ***
+size         0.21703    0.09091   2.387  0.01795 *  
+smokerYes   -0.21232    0.14903  -1.425  0.15588    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9805 on 191 degrees of freedom
+Multiple R-squared:  0.4718,	Adjusted R-squared:  0.4635 
+F-statistic: 56.87 on 3 and 191 DF,  p-value: < 2.2e-16
+
+
+Formula selected by stepwise AIC:
+tip ~ total_bill + size + smoker
+
+==================== 5-FOLD CROSS-VALIDATION (base model formula) ====================
+  Fold   RMSE R_squared
+1    1 0.8396    0.4734
+2    2 1.0716    0.3820
+3    3 0.9997    0.2174
+4    4 1.0772    0.4331
+5    5 0.9780    0.5869
+
+Mean CV RMSE: 0.9932  | Mean CV R-squared: 0.4186 
+
+==================== HOLD-OUT TEST SET PERFORMANCE ====================
+RMSE: 1.1676 
+MAE : 0.777 
+R^2 : 0.4174 
+null device 
+          1 
+null device 
+          1 
+
+==================== MANUAL VIF (1 / (1 - R^2) of auxiliary regressions) ====================
+total_bill       size 
+     1.572      1.572 
+
+
+===== SCRIPT COMPLETE — all outputs saved in outputs/ =====

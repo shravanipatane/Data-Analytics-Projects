@@ -1,0 +1,6 @@
+Final model formula:
+tip ~ total_bill + size + smoker
+
+Coefficients:
+(Intercept)  total_bill        size   smokerYes 
+     0.7244      0.0870      0.2170     -0.2123 
