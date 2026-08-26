@@ -1,298 +1,108 @@
-# 🚚 Logistics Data Analyst
+# Week 3 — Advanced Data Analysis & Visualization in Logistics 🏍️📦
 
-## 📌 Project Overview
+**Domain:** Two-Wheeler (Bike / Scooter / E-Bike) Last-Mile Delivery Logistics
+**Tools:** Python · Pandas · NumPy · Matplotlib · Seaborn
 
-This project is a four-week logistics data analytics project focused on applying data science and analytical techniques to common logistics and supply chain challenges.
-
-The project follows an end-to-end analytical workflow, beginning with strategic planning and data exploration, followed by data collection and preprocessing, advanced analysis and visualization, and finally predictive modeling and optimization.
-
-The primary objective is to understand how data-driven approaches can improve supply chain efficiency, logistics performance, and resource allocation.
-
----
-
-## 🎯 Project Objectives
-
-* Define realistic logistics and supply chain scenarios.
-* Identify relevant logistics Key Performance Indicators (KPIs).
-* Research and understand logistics data requirements.
-* Collect, clean, and preprocess logistics data.
-* Perform exploratory data analysis (EDA).
-* Create meaningful logistics visualizations.
-* Identify operational patterns, bottlenecks, and cost drivers.
-* Develop predictive models for logistics metrics.
-* Evaluate predictive model performance.
-* Propose optimization strategies for logistics operations.
-* Support data-driven decision-making using Python.
+An end-to-end exploratory data analysis (EDA) and visualization project on a
+simulated two-wheeler last-mile delivery operation — analyzing delivery
+performance, cost drivers, and operational bottlenecks across a fleet of
+scooters, motorbikes, and e-bikes.
 
 ---
 
-## 🗂️ Project Structure
+## 📌 Project Objective
 
-```text
-Logistics-Data-Analyst/
+Analyze a two-wheeler logistics dataset to answer:
+
+- What drives delivery time — distance, traffic, or weather?
+- Which vehicle type is the most cost-efficient vs. the fastest?
+- Which delivery zones are operational bottlenecks?
+- How does delivery performance impact customer satisfaction?
+
+---
+
+## 📁 Repository Structure
+
+```
+Week-3-Advanced-EDA-Visualization/
 │
-├── Week-1-Strategic-Planning/
-│   ├── README.md
-│   ├── Strategic_Planning_Report.docx
-│   └── strategic_planning.py
-│
-├── Week-2-Data-Preprocessing/
-│   ├── README.md
-│   ├── data/
-│   │   └── logistics_raw.csv
-│   ├── data_clean/
-│   │   ├── logistics_clean.csv
-│   │   └── data_preprocessing.py
-│   └── Data_Preprocessing_Report.docx
-│
-├── Week-3-Data-Analysis-Visualization/
-│   ├── README.md
-│   ├── plots/
-│   ├── logistics_analysis.py
-│   └── Data_Analysis_Visualization_Report.docx
-│
-├── Week-4-Predictive-Modeling/
-│   ├── README.md
-│   ├── models/
-│   ├── plots/
-│   ├── predictive_model.py
-│   └── Predictive_Modeling_Report.docx
-│
-└── README.md
+├── README.md
+├── data/
+│   └── two_wheeler_logistics.csv        # 2,000-row simulated dataset
+├── scripts/
+│   ├── 01_generate_data.py              # Dataset simulation
+│   ├── 02_eda_analysis.py               # Descriptive stats & correlations
+│   └── 03_visualizations.py             # All chart generation
+├── visualizations/
+│   ├── 01_delivery_time_dist.png
+│   ├── 02_delaybox_traffic.png
+│   ├── 03_distance_vs_time.png
+│   ├── 04_avg_cost_vehicle.png
+│   ├── 05_correlation_heatmap.png
+│   ├── 06_delay_rate_zone.png
+│   ├── 07_daily_trend.png
+│   └── 08_vehicle_share_pie.png
+└── report/
+    ├── Week3_Logistics_Analysis_Report.docx   # Full written report
+    └── eda_summary.txt                        # Raw EDA console output
 ```
 
 ---
 
-# 📅 Project Roadmap
+## 🗂️ Dataset
 
-## Week 1 — Strategic Planning and Data Exploration
+A realistic 2,000-record dataset was simulated (`scripts/01_generate_data.py`)
+with deliberately engineered relationships (e.g. traffic and rain slow down
+deliveries and raise delay risk) so the analysis reflects genuine logistics
+behaviour.
 
-The first stage focuses on defining a realistic logistics scenario, identifying relevant KPIs, researching logistics data, and developing a strategic roadmap for the analysis.
-
-### Key Areas
-
-* Logistics scenario definition
-* Business problem identification
-* KPI identification
-* Data research
-* Data science methodology
-* Analytical roadmap
-* Python approach
-
-### Main Goal
-
-Establish a clear analytical foundation for solving logistics-related problems.
+| Column | Description |
+|---|---|
+| `delivery_id`, `date`, `rider_id` | Record identifiers |
+| `vehicle_type` | Scooter / Motorbike / E-Bike |
+| `zone` | One of 5 delivery zones |
+| `weather`, `traffic_condition`, `time_of_day` | Environmental context |
+| `distance_km`, `shipment_weight_kg` | Trip characteristics |
+| `delivery_time_min`, `sla_minutes`, `delayed` | Performance vs SLA |
+| `fuel_cost_inr`, `delivery_cost_inr` | Cost metrics (INR) |
+| `customer_rating` | 1–5 satisfaction score |
 
 ---
 
-## Week 2 — Data Collection, Cleaning and Preprocessing
+## 🔍 Key Insights
 
-The second stage focuses on preparing logistics data for analysis.
+- **Distance is king:** distance correlates strongly with both delivery time (r = 0.81) and fuel cost (r = 0.82).
+- **Speed vs. satisfaction:** delivery time is the strongest driver of customer rating (r = -0.62) — every minute of delay costs satisfaction.
+- **Fleet trade-off:** Motorbikes are fastest (18.5 min avg, 5% delay rate); E-bikes are ~40% cheaper to run but have the highest delay rate (16%).
+- **Bottleneck zone:** Zone A (Central) has the highest delay rate (14%) despite not having the longest average distance — a congestion/SLA design issue, not a distance issue.
+- **Weather impact:** Rain increases average delivery time by ~32% and roughly triples the delay rate versus clear weather.
 
-### Key Areas
-
-* Data collection simulation
-* Dataset inspection
-* Missing-value analysis
-* Duplicate detection
-* Outlier detection
-* Data cleaning
-* Normalization
-* Data preparation
-
-### Main Goal
-
-Create a high-quality dataset suitable for exploratory analysis and further modeling.
+Full analysis, all 8 visualizations, and recommendations are in
+[`report/Week3_Logistics_Analysis_Report.docx`](report/Week3_Logistics_Analysis_Report.docx).
 
 ---
 
-## Week 3 — Advanced Data Analysis and Visualization
+## ▶️ How to Reproduce
 
-The third stage focuses on exploratory data analysis and visualization of logistics performance.
+```bash
+pip install pandas numpy matplotlib seaborn
 
-### Key Areas
-
-* Exploratory Data Analysis
-* Descriptive statistics
-* Central tendency
-* Data distributions
-* Correlation analysis
-* Logistics performance analysis
-* Data visualization
-* Operational insights
-* Recommendations
-
-### Main Goal
-
-Use data and visualizations to identify logistics performance patterns, cost drivers, and potential operational bottlenecks.
-
----
-
-## Week 4 — Predictive Modeling and Optimization
-
-The fourth stage focuses on predictive analytics and logistics optimization.
-
-### Key Areas
-
-* Problem definition
-* Feature selection
-* Predictive modeling
-* Model training
-* Model testing
-* Model validation
-* MAE
-* RMSE
-* R²
-* Optimization strategies
-* Resource allocation
-* Route planning
-* Cost minimization
-
-### Main Goal
-
-Use predictive insights to support logistics decision-making and propose strategies for improving operational performance.
-
----
-
-# 🛠️ Technologies and Tools
-
-The project uses Python as the primary programming language.
-
-### Programming
-
-* Python
-
-### Data Analysis
-
-* pandas
-* NumPy
-
-### Data Visualization
-
-* Matplotlib
-* Seaborn
-* Plotly
-
-### Machine Learning
-
-* scikit-learn
-
-### Documentation
-
-* Microsoft Word
-* GitHub
-
----
-
-# 📊 Key Logistics KPIs
-
-The project considers logistics performance indicators such as:
-
-* Delivery Time
-* Shipment Volume
-* Transportation Cost
-* On-Time Delivery Rate
-* Inventory Performance
-
-These KPIs help evaluate operational efficiency and support data-driven logistics decisions.
-
----
-
-# 🔬 Analytical Workflow
-
-```text
-                 Logistics Problem
-                        ↓
-              Strategic Planning
-                        ↓
-                 Data Collection
-                        ↓
-              Data Cleaning
-                        ↓
-              Data Preprocessing
-                        ↓
-           Exploratory Data Analysis
-                        ↓
-                Visualization
-                        ↓
-             Predictive Modeling
-                        ↓
-              Model Evaluation
-                        ↓
-                Optimization
-                        ↓
-          Business Recommendations
+cd scripts
+python 01_generate_data.py       # generates data/two_wheeler_logistics.csv
+python 02_eda_analysis.py        # prints + saves EDA summary
+python 03_visualizations.py      # generates all 8 charts
 ```
 
 ---
 
-# 📈 Expected Outcomes
+## 🛠️ Tech Stack
 
-By completing this project, the analysis is expected to provide:
-
-* A structured approach to logistics data analysis.
-* Improved understanding of logistics KPIs.
-* Clean and analysis-ready logistics data.
-* Meaningful insights from exploratory analysis.
-* Visual identification of logistics trends and bottlenecks.
-* Predictive insights for logistics metrics.
-* Recommendations for resource allocation and operational improvement.
-* Potential strategies for route planning and cost minimization.
+- **Python 3** — pandas, numpy (data simulation & analysis)
+- **Matplotlib, Seaborn** — visualization
+- **python-docx / docx-js** — report generation
 
 ---
 
-# 💡 Business Value
+## 📄 License
 
-Data analytics can help logistics operations understand performance, identify inefficiencies, and support better decision-making.
-
-The project demonstrates how a complete analytical workflow can be applied to logistics problems, from initial problem definition and data preparation through analysis, prediction, and optimization.
-
----
-
-# 📚 Project Deliverables
-
-Each project stage includes documentation and Python-based analytical work.
-
-| Week   | Focus                              | Main Deliverable                |
-| ------ | ---------------------------------- | ------------------------------- |
-| Week 1 | Strategic Planning                 | Strategic Planning Report       |
-| Week 2 | Data Preprocessing                 | Data Preprocessing Report       |
-| Week 3 | Analysis & Visualization           | Analysis & Visualization Report |
-| Week 4 | Predictive Modeling & Optimization | Predictive Modeling Report      |
-
----
-
-# 👩‍💻 Skills Demonstrated
-
-This project demonstrates skills in:
-
-* Data Analytics
-* Data Cleaning
-* Data Preprocessing
-* Exploratory Data Analysis
-* Data Visualization
-* Statistical Analysis
-* Python Programming
-* Machine Learning
-* Predictive Modeling
-* Model Evaluation
-* Logistics Analytics
-* Supply Chain Analytics
-* Data-Driven Decision Making
-
----
-
-## 📌 Project Status
-
-🚧 **In Progress**
-
-The project is being developed progressively across four weeks, with each stage building toward a complete logistics data analytics solution.
-
----
-
-## ⭐ Conclusion
-
-The **Logistics Data Analyst** project demonstrates an end-to-end approach to applying Python and data science techniques to logistics and supply chain challenges.
-
-The project progresses from strategic planning and data preparation to advanced analysis, visualization, predictive modeling, and optimization, providing a practical foundation for data-driven logistics decision-making.
-
+This is an educational/portfolio project using simulated data. Free to reference or reuse.
